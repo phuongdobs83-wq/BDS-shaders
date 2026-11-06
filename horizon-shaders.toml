@@ -1,0 +1,372 @@
+schema = 1
+id = "bds_shaders"
+name = "BDS Shaders"
+version = "1.0.0"
+api = "0.1"
+description = "Performance-first warm cinematic shader with procedural cirrus, screen-space god rays, Horizon water reflections and configurable shadows."
+authors = ["BDS project"]
+license = "MIT"
+shared = ["common.wgsl"]
+
+[sky]
+file = "sky.wgsl"
+name = "BDS Sky and Cirrus"
+clouds = false
+sun = false
+stars = true
+
+[material]
+file = "material.wgsl"
+name = "BDS Lighting, Shadows and Water"
+fog = true
+
+[shadow]
+resolution = 1024
+distance = 512.0
+
+[[post]]
+file = "post.wgsl"
+name = "BDS God Rays and Cinematic Grade"
+
+[[post]]
+file = "sharpen.wgsl"
+name = "BDS Hybrid Upscaling"
+
+[budget]
+gpu_ms = 2.5
+
+# ============================================
+# MAIN PROFILE
+# ============================================
+
+[[options]]
+id = "profile"
+name = "Performance Profile"
+description = "Performance, Balanced, Cinematic or Custom."
+type = "choice"
+values = ["Performance", "Balanced", "Cinematic", "Custom"]
+default = "Balanced"
+
+# ============================================
+# LIGHTING & SHADOWS
+# ============================================
+
+[[options]]
+id = "shadows"
+name = "Enable Shadows"
+type = "bool"
+default = true
+
+[[options]]
+id = "shadow_strength"
+name = "Shadow Strength"
+type = "float"
+default = 0.72
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
+id = "ambient_floor"
+name = "Shadow Ambient Floor"
+type = "float"
+default = 0.42
+min = 0.15
+max = 0.8
+step = 0.05
+
+# ============================================
+# WATER REFLECTIONS
+# ============================================
+
+[[options]]
+id = "water_reflections"
+name = "Water Reflections: Enable"
+description = "Uses Horizon's mirrored-world reflection target."
+type = "bool"
+default = true
+
+[[options]]
+id = "water_strength"
+name = "Water Reflections: Strength"
+description = "Controls reflection intensity."
+type = "float"
+default = 0.85
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
+id = "water_smooth"
+name = "Water Reflections: Smooth Water"
+description = "Reduces vanilla water texture influence."
+type = "bool"
+default = true
+
+[[options]]
+id = "water_distortion"
+name = "Water Reflections: Distortion"
+description = "Controls reflection distortion."
+type = "float"
+default = 0.25
+min = 0.0
+max = 1.0
+step = 0.05
+
+# ============================================
+# SUN
+# ============================================
+
+[[options]]
+id = "sun_enabled"
+name = "Custom Sun: Enable"
+type = "bool"
+default = true
+
+[[options]]
+id = "sun_shape"
+name = "Custom Sun: Shape"
+type = "choice"
+values = ["Round", "Square"]
+default = "Round"
+
+[[options]]
+id = "sun_size"
+name = "Custom Sun: Size"
+type = "float"
+default = 1.0
+min = 0.5
+max = 2.0
+step = 0.05
+
+[[options]]
+id = "sun_halo"
+name = "Custom Sun: Halo"
+type = "float"
+default = 0.75
+min = 0.0
+max = 1.5
+step = 0.05
+
+# ============================================
+# GOD RAYS & EFFECTS
+# ============================================
+
+[[options]]
+id = "godrays_enabled"
+name = "God Rays: Enable"
+type = "bool"
+default = true
+
+[[options]]
+id = "godrays_intensity"
+name = "God Rays: Intensity"
+type = "float"
+default = 0.65
+min = 0.0
+max = 1.5
+step = 0.05
+
+[[options]]
+id = "godrays_samples"
+name = "God Rays: Samples"
+type = "int"
+default = 8
+min = 4
+max = 12
+
+[[options]]
+id = "godrays_thickness"
+name = "God Rays: Thickness"
+description = "0 is thin; 3 is the thickest shaft spread."
+type = "float"
+default = 1.0
+min = 0.0
+max = 3.0
+step = 0.1
+
+[[options]]
+id = "bloom_enabled"
+name = "Bloom: Enable"
+type = "bool"
+default = true
+
+[[options]]
+id = "bloom_strength"
+name = "Bloom: Strength"
+type = "float"
+default = 0.22
+min = 0.0
+max = 0.8
+step = 0.025
+
+[[options]]
+id = "vignette_enabled"
+name = "Vignette: Enable"
+type = "bool"
+default = true
+
+# ============================================
+# COLOR & ATMOSPHERE
+# ============================================
+
+[[options]]
+id = "warmth"
+name = "Color: Amber Warmth"
+type = "float"
+default = 0.62
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
+id = "saturation"
+name = "Color: Saturation"
+type = "float"
+default = 1.08
+min = 0.7
+max = 1.4
+step = 0.05
+
+[[options]]
+id = "contrast"
+name = "Color: Contrast"
+type = "float"
+default = 1.05
+min = 0.8
+max = 1.3
+step = 0.05
+
+[[options]]
+id = "exposure"
+name = "Color: Exposure"
+type = "float"
+default = 1.05
+min = 0.7
+max = 1.4
+step = 0.05
+
+[[options]]
+id = "night_blue"
+name = "Night: Blue Tint"
+type = "float"
+default = 1.0
+min = 0.0
+max = 1.5
+step = 0.05
+
+[[options]]
+id = "fog_amount"
+name = "Atmosphere: Fog Amount"
+type = "float"
+default = 1.0
+min = 0.0
+max = 1.5
+step = 0.05
+
+# ============================================
+# BDS HYBRID UPSCALING
+# ============================================
+
+[[options]]
+id = "sharpen_enabled"
+name = "Upscaling: Sharpening"
+description = "Enable image sharpening."
+type = "bool"
+default = true
+
+[[options]]
+id = "sharpen_strength"
+name = "Upscaling: Sharpness"
+description = "Controls sharpening intensity."
+type = "float"
+default = 0.35
+min = 0.0
+max = 1.0
+step = 0.05
+
+# ============================================
+# SETTINGS PAGES
+# ============================================
+
+[[pages]]
+id = "main"
+name = "BDS Shaders"
+items = [
+    "profile",
+    "page:lighting",
+    "page:water",
+    "page:sky",
+    "page:effects",
+    "page:color",
+    "page:upscaling"
+]
+
+[[pages]]
+id = "lighting"
+name = "Lighting & Shadows"
+columns = 1
+items = [
+    "shadows",
+    "shadow_strength",
+    "ambient_floor"
+]
+
+[[pages]]
+id = "water"
+name = "Water Reflections"
+columns = 1
+items = [
+    "water_reflections",
+    "water_strength",
+    "water_smooth",
+    "water_distortion"
+]
+
+[[pages]]
+id = "sky"
+name = "Sun"
+columns = 1
+items = [
+    "sun_enabled",
+    "sun_shape",
+    "sun_size",
+    "sun_halo"
+]
+
+[[pages]]
+id = "effects"
+name = "God Rays & Effects"
+columns = 1
+items = [
+    "godrays_enabled",
+    "godrays_intensity",
+    "godrays_samples",
+    "godrays_thickness",
+    "bloom_enabled",
+    "bloom_strength",
+    "vignette_enabled"
+]
+
+[[pages]]
+id = "color"
+name = "Color & Atmosphere"
+columns = 1
+items = [
+    "warmth",
+    "saturation",
+    "contrast",
+    "exposure",
+    "night_blue",
+    "fog_amount"
+]
+
+[[pages]]
+id = "upscaling"
+name = "Hybrid Upscaling"
+columns = 1
+items = [
+    "sharpen_enabled",
+    "sharpen_strength"
+]
+
